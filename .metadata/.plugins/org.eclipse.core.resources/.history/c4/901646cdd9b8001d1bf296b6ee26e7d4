@@ -1,0 +1,53 @@
+package com.example.Store.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.Store.daos.ServiceDao;
+import com.example.Store.entities.Products;
+import com.example.Store.entities.Services;
+
+@Service
+public class ServicesDetailsImpl {
+	
+  @Autowired
+  private ServiceDao serviceDao;
+  
+
+  public List<Services> findAll(){
+	  
+	 
+	return serviceDao.findAll();
+	  
+  }
+	
+  public Services save(Services serv)
+	{
+		return serviceDao.save(serv);
+		
+	}
+  
+  public void deleteById(int sd_id) {
+		serviceDao.deleteById(sd_id);
+	}
+	  
+  
+  
+  public int updateService(int sd_id) {
+		Optional<Services> op=serviceDao.findById(sd_id);
+		if(op.isPresent()) {
+			Services service =op.get();
+			service.setName(op.get().getName());
+			service.setAddress(op.get().getAddress());
+			service.setPhone(op.get().getPhone());
+			serviceDao.save(service);
+			return 1;
+		}
+		return 0 ;
+		
+}
+  
+}
